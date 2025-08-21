@@ -341,7 +341,7 @@ async function getUsers() {
   async function checkServerStatus() {
     const statusEl = document.querySelector(".status");
     try {
-      const res = await fetch("https://kyxzan-ganzz.404-eror.systems/kyxsan/status");
+      const res = await fetch("https://kyxzan-ganzz.404-eror.systems/status");
       const data = await res.json();
       if (data.connected) {
         statusEl.innerHTML = `<i class="fas fa-circle" style="color:limegreen;"></i> Connected`;
@@ -356,3 +356,4 @@ async function getUsers() {
 <script src="api.js"></script>
 </body>
 </html>
+
